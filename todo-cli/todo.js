@@ -28,7 +28,7 @@ const todoList = () => {
         let result='';
     list.forEach((i) => {
         const formattedDueDate =i.dueDate === new Date().toISOString().split('T')[0]?'':`${i.dueDate}`;
-        const checkbox=i.completed ? '[x]':'[]';
+        const checkbox=i.completed ? '[x]':'[ ]';
         result += `${checkbox}  ${i.title}  ${formattedDueDate}\n`;
     });
     return result.trimEnd();
@@ -53,10 +53,10 @@ const formattedDate = d => {
 var dateToday = new Date()
 const today = formattedDate(dateToday)
 const yesterday = formattedDate(
-    new Date(new Date().setDate(dateToday.getDate() - 7))
+    new Date(new Date().setDate(dateToday.getDate()-1))
 )
 const tomorrow = formattedDate(
-    new Date(new Date().setDate(dateToday.getDate() + 7))
+    new Date(new Date().setDate(dateToday.getDate()+1))
 )
 
 todos.add({ title: 'Submit assignment', dueDate: yesterday, completed: false })
