@@ -28,7 +28,7 @@ const todoList = () => {
         let result='';
     list.forEach((i) => {
         const formattedDueDate =i.dueDate === new Date().toISOString().split('T')[0]?'':`${i.dueDate}`;
-        const checkbox=i.completed ? '[x]':'[]';
+        const checkbox=i.completed ? '[x]':'[ ]';
         result += `${checkbox}  ${i.title}  ${formattedDueDate}\n`;
     });
     return result.trimEnd();
