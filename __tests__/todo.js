@@ -7,11 +7,16 @@ describe("TodoList Test Suite", () => {
   test("Should add new todo", () => {
     const todoItemsCount = todos.all.length;
     todos.add({
-      title: "Test todo 1",
+      title: "Test todo ",
       completed: false,
       dueDate: "2023-12-20",
     });
-    expect(todos.all.length).toBe(todoItemsCount + 1);
+    todos.add({
+      title: "Test todo 1",
+      completed: false,
+      dueDate: "2023-12-21",
+    });
+    expect(todos.all.length).toBe(todoItemsCount + 2);
   });
 
   test("Should mark a todo as complete", () => {
@@ -29,7 +34,7 @@ describe("TodoList Test Suite", () => {
 
     const overDueTodoItemsCount = todos.overdue().length;
     const overdueAdd = {
-      title: "Do Coding",
+      title: "Do Assignment",
       dueDate: yesterday,
       completed: false,
     };
@@ -44,7 +49,7 @@ describe("TodoList Test Suite", () => {
 
     const DueTodayTodoItemsCount = todos.dueToday().length;
     const todayAdd = {
-      title: "Do laundry",
+      title: "Do coding",
       dueDate: today,
       completed: "false",
     };
@@ -61,7 +66,7 @@ describe("TodoList Test Suite", () => {
 
     const DueLaterTodoItemsCount = todos.dueLater().length;
     const laterAdd = {
-      title: "Return a book",
+      title: "Call Doctor",
       dueDate: tomorrow,
       completed: false,
     };
