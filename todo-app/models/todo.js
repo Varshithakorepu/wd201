@@ -1,6 +1,7 @@
 'use strict';
 const {
-  Model
+  Model,
+  Op
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
@@ -12,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-    static addTodos(){
+    static addTodos({title,dueDate}){
       return this.create({title: title, dueDate: dueDate, completed: false});
     }
     static getTodos(){
@@ -20,6 +21,54 @@ module.exports = (sequelize, DataTypes) => {
     }
     markAsCompleted() {
       return this.update({completed: true});
+    }
+    static async getOverdueTodos(){
+      try{
+        const OverdueTodos =await Todo.findAll({
+          where: {
+            dueDate:{
+              [Op.lt]: new Date(),
+            },
+          },
+        });
+        return OverdueTodos;
+      }catch(error) {
+        console.error('Error!!!',error);
+        throw error;
+      }
+    }
+    static async getdueTodayTodos(){
+      try{
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const DueTodayTodos =await Todo.findAll({
+          where: {
+            dueDate:{
+              [Op.between]:[today, tomorrow],
+            },
+          },
+        });
+        return DueTodayTodos;
+      }catch(error) {
+        console.error('Error!!!',error);
+        throw error;
+      }
+    }
+    static async getdueLaterTodos(){
+      try{
+        const DueLaterTodos =await Todo.findAll({
+          where: {
+            dueDate:{
+              [Op.gt]: new Date(),
+            },
+          },
+        });
+        return DueLaterTodos;
+      }catch(error) {
+        console.error('Error!!!',error);
+        throw error;
+      }
     }
   }
   Todo.init({
