@@ -2,21 +2,30 @@ const express = require("express");
 const app = express();
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
+const path =require("path");
+
 app.use(bodyParser.json());
+
 app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname,"public")));
+
+app.use(express.static(path.join(__dirname,'public')));
 app.get("/", async (request, response) => {
-  const allTodos = await Todo.getTodos();
+  const Overdue = await Todo.getOverdueTodos();
+  const dueToday= await Todo.getdueTodayTodos();
+  const dueLater= await Todo.getdueLaterTodos();
   if (request.accepts("html")) {
-    response.render("index.ejs", {
-      allTodos,
+    response.render('index', {
+      Overdue,
+      dueToday,
+      dueLater,
     });
   } else {
     response.json({
-      allTodos,
+      Overdue,
+      dueToday,
+      dueLater,
     });
   }
-  response.render("index.ejs");
 });
 
 app.get("/", function (request, response) {
@@ -82,6 +91,10 @@ app.delete("/todos/:id", async function (request, response) {
   } else {
     response.send(false);
   }
+
+  // First, we have to query our database to delete a Todo by ID.
+  // Then, we have to respond back with true/false based on whether the Todo was deleted or not.
+  // response.send(true)
 });
 
 module.exports = app;
