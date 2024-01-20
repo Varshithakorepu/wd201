@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Over-Due</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Due Date</th>
+            <th>Completed</th>
+        </tr>
+        <% for( var i = 0; i < Overdue.length; i++) { %>
+            <tr>
+                <td>
+                    <%= Overdue[i].id %>
+                </td>
+                <td>
+                    <%= Overdue[i].title %>
+                </td>
+                <td>
+                    <%= Overdue[i].dueDate %>
+                </td>
+                <td>
+                    <%= Overdue[i].completed ? true :false  %>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+    <h2>Due-Today</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Due Date</th>
+            <th>Completed</th>
+        </tr>
+        <% for( var i = 0; i < dueToday.length; i++) { %>
+            <tr>
+                <td>
+                    <%= dueToday[i].id %>
+                </td>
+                <td>
+                    <%= dueToday[i].title %>
+                </td>
+                <td>
+                    <%= dueToday[i].dueDate %>
+                </td>
+                <td>
+                    <%= dueToday[i].completed ? true :false  %>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+    <h2>Due-Later</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Due Date</th>
+            <th>Completed</th>
+        </tr>
+        <% for( var i = 0; i < dueLater.length; i++) { %>
+            <tr>
+                <td>
+                    <%= dueLater[i].id %>
+                </td>
+                <td>
+                    <%= dueLater[i].title %>
+                </td>
+                <td>
+                    <%= dueLater[i].dueDate %>
+                </td>
+                <td>
+                    <%= dueLater[i].completed ? true :false  %>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+</body>
+</html>
