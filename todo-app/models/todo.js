@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     static addTodos({title,dueDate}){
       return this.create({title: title, dueDate: dueDate, completed: false});
     }
-    static getTodos(){
+    static async getTodos(){
       return this.findAll();
     }
     markAsCompleted() {
@@ -31,7 +31,17 @@ module.exports = (sequelize, DataTypes) => {
             },
           },
         });
-        return OverdueTodos;
+        if(OverdueTodos.length >= 1){
+          return OverdueTodos
+        }else{
+          await this.addTodos({
+            title:"Go to Home",
+            dueDate: new Date(new Date().setDate(new Date().getDate()-1)).toISOString(),
+            completed:false,
+          });          
+        }
+        const Overdue =this.getOverdueTodos;
+        return Overdue
       }catch(error) {
         console.error('Error!!!',error);
         throw error;
@@ -45,11 +55,21 @@ module.exports = (sequelize, DataTypes) => {
         const DueTodayTodos =await Todo.findAll({
           where: {
             dueDate:{
-              [Op.between]:[today, tomorrow],
+              [Op.between]:[new Date(),new Date(new Date().setHours(23,59,59,999))],
             },
           },
         });
-        return DueTodayTodos;
+        if(DueTodayTodos.length >=1){
+          return DueTodayTodos;
+        }else{
+          await this.addTodos({
+            title:"Buy milk",
+            dueDate: new Date().toISOString(),
+            completed:false,
+          });
+        }
+        const dueToday = this.getdueTodayTodos;
+        return dueToday
       }catch(error) {
         console.error('Error!!!',error);
         throw error;
@@ -64,7 +84,17 @@ module.exports = (sequelize, DataTypes) => {
             },
           },
         });
-        return DueLaterTodos;
+        if(DueLaterTodos.length >=1){
+          return DueLaterTodos;
+        }else{
+          await this.addTodos({
+            title:"Have to pay electricity bill",
+            dueDate: tomorrow.toISOString(),
+            completed:false,
+          });
+        }
+        const dueLater = this.getdueLaterTodos;
+        return dueLater
       }catch(error) {
         console.error('Error!!!',error);
         throw error;
