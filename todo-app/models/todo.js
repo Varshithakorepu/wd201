@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-    static addTodos({title,dueDate}){
+    static addTodo({title,dueDate}){
       return this.create({title: title, dueDate: dueDate, completed: false});
     }
     static async getTodos(){
@@ -34,13 +34,13 @@ module.exports = (sequelize, DataTypes) => {
         if(OverdueTodos.length >= 1){
           return OverdueTodos
         }else{
-          await this.addTodos({
+          await this.addTodo({
             title:"Go to Home",
             dueDate: new Date(new Date().setDate(new Date().getDate()-1)).toISOString(),
             completed:false,
           });          
         }
-        const Overdue =this.getOverdueTodos;
+        const Overdue =await this.getOverdueTodos;
         return Overdue
       }catch(error) {
         console.error('Error!!!',error);
@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
         if(DueTodayTodos.length >=1){
           return DueTodayTodos;
         }else{
-          await this.addTodos({
+          await this.addTodo({
             title:"Buy milk",
             dueDate: new Date().toISOString(),
             completed:false,
@@ -86,20 +86,40 @@ module.exports = (sequelize, DataTypes) => {
         }else{
           const tomorrow = new Date();
           tomorrow.setDate(tomorrow.getDate() + 1);
-          await this.addTodos({
+          await this.addTodo({
             title:"Have to pay electricity bill",
-            dueDate: tomorrow.toISOString(),
+            dueDate:  tomorrow.toISOString(),
             completed:false,
           });
         }
-        const dueLater = this.getdueLaterTodos;
+        const dueLater = await this.getdueLaterTodos;
         return dueLater
       }catch(error) {
         console.error('Error!!!',error);
         throw error;
       }
     }
+    static async remove(id) {
+      return this.destroy({
+        where:{
+          id,
+        }
+      })
+    }
+    static async completedItems(){
+      try{
+        const Completed = await this.findAll({
+          where:{
+          completed: true,
+        }
+      })
+      return Completed
+    }catch(error){
+      console.error('Error!!!' , error);
+      throw error;
+    }
   }
+}
   Todo.init({
     title: DataTypes.STRING,
     dueDate: DataTypes.DATEONLY,
