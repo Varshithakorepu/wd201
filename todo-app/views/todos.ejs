@@ -1,5 +1,8 @@
 <div class="mx-auto">
-    <h5 class="text-1xl font-semibold">Overdue   <span class="border border-gray-300 rounded  px-1 py-0 text-sm"><%= Overdue.length %></span></h5>
+    <div class="flex items-center">
+    <h5 class="text-1xl font-semibold">Overdue</h5>   
+    <span class="border border-gray-300 rounded  px-1 py-0 text-sm"><%= Overdue.length %></span>
+    </div>
     <ul class="list-none">
         <% for (var i =0; i< Overdue.length;i++){ %> 
         <li class="Todo-Item">
@@ -14,7 +17,10 @@
         </li>
         <% } %>
     </ul>
-    <h5 class="text-1xl font-semibold">Due Today <span class="border border-gray-300 rounded  px-1 py-0 text-sm"><%= dueToday.length %></span></h5>
+    <div class="flex items-center">
+    <h5 class="text-1xl font-semibold">Due Today</h5>
+    <span class="border border-gray-300 rounded  px-1 py-0 text-sm"><%= dueToday.length %></span>
+    </div>
     <ul class="list-none">
         <% for (var i =0; i< dueToday.length;i++){ %> 
         <li class="Todo-Item">
@@ -29,7 +35,10 @@
         </li>
         <% } %>
     </ul>
-    <h5 class="text-1xl font-semibold">Due Later <span class="border border-gray-300 rounded  px-1 py-0 text-sm"><%= dueLater.length %></span>  </h5>
+    <div class="flex items-center">
+    <h5 class="text-1xl font-semibold">Due Later</h5>
+    <span class="border border-gray-300 rounded  px-1 py-0 text-sm"><%= dueLater.length %></span>
+    </div>
     <ul class="list-none">
         <% for (var i =0; i< dueLater.length;i++){ %> 
         <li class="Todo-Item">
