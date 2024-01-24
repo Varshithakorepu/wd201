@@ -49,9 +49,6 @@ module.exports = (sequelize, DataTypes) => {
     }
     static async getdueTodayTodos(){
       try{
-        const today = new Date();
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
         const DueTodayTodos =await Todo.findAll({
           where: {
             dueDate:{
@@ -87,6 +84,8 @@ module.exports = (sequelize, DataTypes) => {
         if(DueLaterTodos.length >=1){
           return DueLaterTodos;
         }else{
+          const tomorrow = new Date();
+          tomorrow.setDate(tomorrow.getDate() + 1);
           await this.addTodos({
             title:"Have to pay electricity bill",
             dueDate: tomorrow.toISOString(),
