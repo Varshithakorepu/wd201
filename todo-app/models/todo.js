@@ -119,6 +119,9 @@ module.exports = (sequelize, DataTypes) => {
       throw error;
     }
   }
+  setCompletionStatus(receiver){
+    return this.update({completed: receiver});
+  }
 }
   Todo.init({
     title: DataTypes.STRING,
